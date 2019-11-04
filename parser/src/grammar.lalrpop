@@ -1,0 +1,59 @@
+use std::str::FromStr;
+use crate::ast::{Expression, OperationType};
+
+grammar;
+
+pub Program = Separated<Expression, ";">;
+
+Separated<T, Separator>: Vec<T> = {
+    <vector:(<T> Separator)*> <end:T?> => match end {
+        None => vector,
+        Some(end) => {
+            let mut vector = vector;
+            vector.push(end);
+            vector
+        }
+    }
+};
+
+Expression = Expression1;
+
+Expression1 = {
+    Expression2 AdditionOperator Expression1 => Box::new(Expression::Operation(<>)),
+    Expression2
+};
+
+Expression2 = {
+    Expression2 SubtractionOperator Expression3 => Box::new(Expression::Operation(<>)),
+    Expression3
+};
+
+Expression3 = {
+    Expression3 MultiplicationOperator Expression4 => Box::new(Expression::Operation(<>)),
+    Expression3 DivisionOperator Expression4 => Box::new(Expression::Operation(<>)),
+    Expression4
+};
+
+Expression4: Box<Expression> = {
+    Number => Box::new(Expression::Number(<>))
+};
+
+Number: i32 = {
+    r"[0-9]+" => i32::from_str(<>).unwrap()
+};
+
+AdditionOperator: OperationType = {
+    "+" => OperationType::Add
+};
+
+SubtractionOperator: OperationType = {
+    "-" => OperationType::Sub
+};
+
+MultiplicationOperator: OperationType = {
+    "*" => OperationType::Mul
+};
+
+DivisionOperator: OperationType = {
+    "/" => OperationType::Div
+};
