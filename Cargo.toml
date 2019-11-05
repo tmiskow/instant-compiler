@@ -10,3 +10,5 @@ path = "src/lib.rs"
 
 [dependencies]
 parser = { path = "parser" }
+compiler = { path = "compiler" }
+

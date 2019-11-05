@@ -266,14 +266,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "instant-compiler"
-version = "0.1.0"
-dependencies = [
- "compiler 0.1.0",
- "parser 0.1.0",
-]
-
-[[package]]
 name = "itertools"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

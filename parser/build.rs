@@ -1,9 +1,8 @@
 extern crate lalrpop;
 
 fn main() {
-//    lalrpop::process_root().unwrap();
     lalrpop::Configuration::new()
         .generate_in_source_tree()
         .process()
-        .unwrap_or_else(|err| panic!("{:?}", err));
+        .unwrap_or_else(|error| panic!("{:?}", error));
 }
