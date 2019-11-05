@@ -1,3 +1,4 @@
 .idea/
+llvm/
 target/
 **/*.rs.bk

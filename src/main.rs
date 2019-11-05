@@ -1,13 +1,14 @@
 use parser::grammar;
 use compiler::llvm;
+use std::io::Read;
 
 pub fn main() {
     use std::io;
 
     let parser = grammar::ProgramParser::new();
-    let mut line = String::new();
-    io::stdin().read_line(&mut line).expect("Failed to read line");
-    let expressions = parser.parse(&line).unwrap();
+    let mut input = String::new();
+    io::stdin().read_to_string(&mut input).expect("Failed to read line");
+    let expressions = parser.parse(&input).unwrap();
     let code = llvm::compile(expressions);
     println!("{}", code);
 }

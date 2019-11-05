@@ -1,9 +1,9 @@
 use std::str::FromStr;
-use crate::ast::{Expression, OperationType};
+use crate::ast::{Statement, Expression, OperationType};
 
 grammar;
 
-pub Program = Separated<Expression, ";">;
+pub Program = Separated<Statement, ";">;
 
 Separated<T, Separator>: Vec<T> = {
     <vector:(<T> Separator)*> <end:T?> => match end {
@@ -15,6 +15,13 @@ Separated<T, Separator>: Vec<T> = {
         }
     }
 };
+
+Statement: Statement = {
+    <Identifier> "=" <Expression> => Statement::Assignment(<>),
+    Expression => Statement::Expression(<>)
+};
+
+Identifier: String = r"[a-z]\w*" => <>.to_string();
 
 Expression = Expression1;
 
@@ -35,7 +42,9 @@ Expression3 = {
 };
 
 Expression4: Box<Expression> = {
-    Number => Box::new(Expression::Number(<>))
+    Number => Box::new(Expression::Number(<>)),
+    Identifier => Box::new(Expression::Identifier(<>)),
+    "(" <Expression> ")"
 };
 
 Number: i32 = {
