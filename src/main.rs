@@ -1,5 +1,5 @@
 use parser::grammar;
-use compiler::llvm;
+use compiler::{llvm, jvm};
 use std::io::Read;
 
 pub fn main() {
@@ -9,7 +9,8 @@ pub fn main() {
     let mut input = String::new();
     io::stdin().read_to_string(&mut input).expect("Failed to read line");
     let expressions = parser.parse(&input).unwrap();
-    let code = llvm::compile(expressions);
+//    let code = llvm::compile(expressions);
+    let code = jvm::compile(expressions);
     println!("{}", code);
 }
 
