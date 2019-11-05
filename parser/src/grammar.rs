@@ -269,13 +269,13 @@ mod __parse__Program {
         }).collect()
     }
     pub struct __StateMachine<'input>
-    where 
+    where
     {
         input: &'input str,
         __phantom: ::std::marker::PhantomData<(&'input ())>,
     }
     impl<'input> __state_machine::ParserDefinition for __StateMachine<'input>
-    where 
+    where
     {
         type Location = usize;
         type Error = &'static str;
@@ -1770,7 +1770,7 @@ fn __action13<
     (_, __0, _): (usize, i32, usize),
 ) -> Box<Expression>
 {
-    Box::new(Expression::Number(__0))
+    Box::new(Expression::Literal(__0))
 }
 
 #[allow(unused_variables)]
@@ -1781,7 +1781,7 @@ fn __action14<
     (_, __0, _): (usize, String, usize),
 ) -> Box<Expression>
 {
-    Box::new(Expression::Identifier(__0))
+    Box::new(Expression::Variable(__0))
 }
 
 #[allow(unused_variables)]
@@ -1816,7 +1816,7 @@ fn __action17<
     (_, __0, _): (usize, &'input str, usize),
 ) -> OperationType
 {
-    OperationType::Add
+    OperationType::Addition
 }
 
 #[allow(unused_variables)]
@@ -1827,7 +1827,7 @@ fn __action18<
     (_, __0, _): (usize, &'input str, usize),
 ) -> OperationType
 {
-    OperationType::Sub
+    OperationType::Subtraction
 }
 
 #[allow(unused_variables)]
@@ -1838,7 +1838,7 @@ fn __action19<
     (_, __0, _): (usize, &'input str, usize),
 ) -> OperationType
 {
-    OperationType::Mul
+    OperationType::Multiplication
 }
 
 #[allow(unused_variables)]
@@ -1849,7 +1849,7 @@ fn __action20<
     (_, __0, _): (usize, &'input str, usize),
 ) -> OperationType
 {
-    OperationType::Div
+    OperationType::Division
 }
 
 #[allow(unused_variables)]

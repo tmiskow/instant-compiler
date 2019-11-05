@@ -1,5 +1,5 @@
 use parser::ast::{Expression, OperationType, Statement};
-use parser::ast::Expression::{Number, Operation};
+use parser::ast::Expression::{Literal, Operation};
 use std::collections::HashMap;
 
 pub fn compile(statements: Vec<Statement>) -> String {
@@ -53,8 +53,8 @@ impl Compiler {
 
     fn compile_expression(&mut self, expression: Box<Expression>) -> String {
         match *expression {
-            Number(n) => n.to_string(),
-            Expression::Identifier(name) => self.variables.get(&*name).unwrap().to_string(),
+            Literal(n) => n.to_string(),
+            Expression::Variable(name) => self.variables.get(&*name).unwrap().to_string(),
             Operation(left_expression, operation_type, right_expression) =>
                 self.compile_operation(left_expression, operation_type, right_expression)
         }
@@ -89,10 +89,10 @@ impl Compiler {
 
     fn get_instruction(operation_type: OperationType) -> &'static str {
         match operation_type {
-            OperationType::Mul => "mul",
-            OperationType::Div => "sdiv",
-            OperationType::Add => "add",
-            OperationType::Sub => "sub",
+            OperationType::Multiplication => "mul",
+            OperationType::Division => "sdiv",
+            OperationType::Addition => "add",
+            OperationType::Subtraction => "sub",
         }
     }
 }

@@ -6,16 +6,16 @@ pub enum Statement {
 
 #[derive(Debug)]
 pub enum Expression {
-    Number(i32),
-    Identifier(String),
+    Literal(i32),
+    Variable(String),
     Operation(Box<Expression>, OperationType, Box<Expression>)
 }
 
 #[derive(Debug, Copy, Clone)]
 pub enum OperationType {
-    Mul,
-    Div,
-    Add,
-    Sub
+    Multiplication,
+    Division,
+    Addition,
+    Subtraction
 }
 

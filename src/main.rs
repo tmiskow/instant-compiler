@@ -9,6 +9,7 @@ pub fn main() {
     let mut input = String::new();
     io::stdin().read_to_string(&mut input).expect("Failed to read line");
     let expressions = parser.parse(&input).unwrap();
+//    println!("{:?}", expressions);
 //    let code = llvm::compile(expressions);
     let code = jvm::compile(expressions);
     println!("{}", code);
