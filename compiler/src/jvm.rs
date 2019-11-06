@@ -4,9 +4,9 @@ use std::collections::HashMap;
 use crate::code::Code;
 use std::cmp::max;
 
-pub fn compile(statements: Vec<Statement>) -> String {
+pub fn compile(statements: Vec<Statement>, main_class: &str) -> String {
     let mut compiler = Compiler::new();
-    compiler.compile_program(statements)
+    compiler.compile_program(statements, main_class)
 }
 
 struct CompilerResult {
@@ -25,11 +25,11 @@ impl Compiler {
         self.variables.len() + 1
     }
 
-    fn compile_program(&mut self, statements: Vec<Statement>) -> String {
+    fn compile_program(&mut self, statements: Vec<Statement>, main_class: &str) -> String {
         let mut main = self.compile_statements(statements);
         let mut code = Code::new();
         code.add_lines(&[
-            ".class  public Main",
+            &format!(".class public {}", main_class),
             ".super  java/lang/Object",
             ".method public <init>()V",
             "aload_0",
@@ -128,7 +128,7 @@ impl Compiler {
             Subtraction | Division if should_reverse => code.add_line("swap"),
             _ => {}
         }
-        let mut operation = Self::compile_operation_type(operation_type);
+        let mut operation = self.compile_operation_type(operation_type);
         CompilerResult {
             code: Code::merge(&mut code, &mut operation.code),
             stack_size: stack_size + operation.stack_size
@@ -148,13 +148,13 @@ impl Compiler {
         CompilerResult { code, stack_size }
     }
 
-    fn compile_operation_type(operation_type: OperationType) -> CompilerResult {
+    fn compile_operation_type(&self, operation_type: OperationType) -> CompilerResult {
         let instruction = match operation_type {
             Multiplication => "imul",
             Division => "idiv",
             Addition => "iadd",
             Subtraction => "isub",
         }.to_string();
-        CompilerResult { code: Code::from_line(&instruction), stack_size: 1 }
+        CompilerResult { code: Code::from_line(&instruction), stack_size: 0 }
     }
 }

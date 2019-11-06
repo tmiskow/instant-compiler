@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: $0 <input_path>"
+  exit 1
+fi
+
+instant_file=$1
+directory=$(dirname "$instant_file")
+basename=$(basename "$instant_file" .ins)
+basepath=$directory/$basename
+jasmin_file=$basepath.j
+
+./target/debug/jvm "$basename" < "$instant_file" > "$jasmin_file"
+java -jar lib/jasmin.jar -d "$directory" "$jasmin_file" > /dev/null

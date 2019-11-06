@@ -2,4 +2,7 @@
 llvm/
 target/
 **/*.rs.bk
+*.j
 *.class
+*.ll
+*.bc

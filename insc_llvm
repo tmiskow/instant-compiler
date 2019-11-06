@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: $0 <input_path>"
+  exit 1
+fi
+
+instant_file=$1
+directory=$(dirname "$instant_file")
+basename=$(basename "$instant_file" .ins)
+basepath=$directory/$basename
+llvm_file=$basepath.ll
+bitcode_file=$basepath.bc
+
+temp_file=$(mktemp)
+
+./target/debug/llvm < "$instant_file" > "$llvm_file"
+llvm-as -o "$temp_file" "$llvm_file"
+llvm-link -o "$bitcode_file" "$temp_file" lib/runtime.bc
+
+rm "$temp_file"
