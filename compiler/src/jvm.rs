@@ -105,7 +105,8 @@ impl Compiler {
     }
 
     fn compile_variable_expression(&mut self, variable_name: &str) -> CompilerResult {
-        let variable_index = *self.variables.get(variable_name).unwrap();
+        let variable_index = *self.variables.get(variable_name)
+            .expect((format!("Unknown variable: {}", variable_name)).as_str());
         let instruction = match variable_index {
             0..=3 => format!("iload_{}", variable_index),
             _ => format!("iload {}", variable_index)
