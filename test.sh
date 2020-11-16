@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for i in {1..6}; do
+for i in {1..7}; do
   filename="tests/test0$i.ins"
   ./insc_jvm $filename
   ./insc_llvm $filename
@@ -8,7 +8,7 @@ done
 
 cd tests || exit
 
-for i in {1..6}; do
+for i in {1..7}; do
   echo "$i:"
   if java "test0$i" |  diff - "test0$i.output"; then
     echo "JVM PASSED"
