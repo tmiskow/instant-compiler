@@ -1,5 +1,5 @@
 use instant_compiler::parse_input;
-use compiler::jvm;
+use instant_compiler::compiler::jvm;
 use std::env;
 
 pub fn main() {

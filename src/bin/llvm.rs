@@ -1,5 +1,5 @@
 use instant_compiler::parse_input;
-use compiler::llvm;
+use instant_compiler::compiler::llvm;
 
 pub fn main() {
     let ast = parse_input();

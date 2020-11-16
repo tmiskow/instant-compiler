@@ -1,8 +1,8 @@
-use parser::ast::OperationType::{Addition, Division, Multiplication, Subtraction};
-use parser::ast::{Expression, OperationType, Statement};
-use parser::ast::Expression::{Literal, Operation, Variable};
 use std::collections::HashMap;
-use crate::code::Code;
+use crate::parser::ast::OperationType::{Addition, Division, Multiplication, Subtraction};
+use crate::parser::ast::{Expression, OperationType, Statement};
+use crate::parser::ast::Expression::{Literal, Operation, Variable};
+use crate::compiler::code::Code;
 
 pub fn compile(statements: Vec<Statement>) -> String {
     let mut compiler = Compiler::new();

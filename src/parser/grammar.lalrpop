@@ -1,5 +1,5 @@
 use std::str::FromStr;
-use crate::ast::{Statement, Expression, OperationType};
+use crate::parser::ast::{Statement, Expression, OperationType};
 
 grammar;
 
@@ -42,8 +42,8 @@ Expression3 = {
 };
 
 Expression4: Box<Expression> = {
-    Number => Box::new(Expression::Number(<>)),
-    Identifier => Box::new(Expression::Identifier(<>)),
+    Number => Box::new(Expression::Literal(<>)),
+    Identifier => Box::new(Expression::Variable(<>)),
     "(" <Expression> ")"
 };
 
@@ -52,17 +52,17 @@ Number: i32 = {
 };
 
 AdditionOperator: OperationType = {
-    "+" => OperationType::Add
+    "+" => OperationType::Addition
 };
 
 SubtractionOperator: OperationType = {
-    "-" => OperationType::Sub
+    "-" => OperationType::Subtraction
 };
 
 MultiplicationOperator: OperationType = {
-    "*" => OperationType::Mul
+    "*" => OperationType::Multiplication
 };
 
 DivisionOperator: OperationType = {
-    "/" => OperationType::Div
+    "/" => OperationType::Division
 };

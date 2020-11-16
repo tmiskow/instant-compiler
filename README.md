@@ -5,7 +5,7 @@ It's written in Rust and uses [LARPOP](https://github.com/lalrpop/lalrpop) to ge
 
 ## Grammar
 
-Instant grammar in LALRPOP format is available [here](parser/src/grammar.lalrpop).
+Instant grammar in LALRPOP format is available [here](src/parser/grammar.lalrpop).
 
 BNFC grammar below for visual purposes only:
 

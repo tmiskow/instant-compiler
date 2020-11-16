@@ -1,8 +1,8 @@
-use parser::ast::OperationType::{Addition, Division, Multiplication, Subtraction};
-use parser::ast::{Statement, Expression, OperationType};
 use std::collections::HashMap;
-use crate::code::Code;
 use std::cmp::max;
+use crate::parser::ast::OperationType::{Addition, Division, Multiplication, Subtraction};
+use crate::parser::ast::{Statement, Expression, OperationType};
+use crate::compiler::code::Code;
 
 pub fn compile(statements: Vec<Statement>, main_class: &str) -> String {
     let mut compiler = Compiler::new();
@@ -99,7 +99,8 @@ impl Compiler {
         let instruction = match value {
             0..=5 => format!("iconst_{}", value),
             6..=127 => format!("bipush {}", value),
-            _ => format!("sipush {}", value),
+            128..=32767 => format!("sipush {}", value),
+            _ => format!("ldc {}", value),
         };
         CompilerResult { code: Code::from_line(&instruction), stack_size: 1 }
     }
@@ -125,9 +126,10 @@ impl Compiler {
         let should_reverse = right.stack_size > left.stack_size;
         let (first, second) = if should_reverse { (right, left) } else { (left, right) };
         let CompilerResult { mut code, stack_size } = self.compile_operands(first, second);
-        match operation_type {
-            Subtraction | Division if should_reverse => code.add_line("swap"),
-            _ => {}
+        if let Subtraction | Division = operation_type {
+            if should_reverse {
+                code.add_line("swap");
+            }
         }
         let mut operation = self.compile_operation_type(operation_type);
         CompilerResult {

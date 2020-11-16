@@ -1,3 +1,6 @@
+pub mod compiler;
+pub mod parser;
+
 use parser::ast::Statement;
 use parser::grammar;
 use std::io::Read;

@@ -1,6 +1,6 @@
 use std::io;
 use std::io::Read;
-use parser::grammar;
+use instant_compiler::parser::grammar;
 
 pub fn main() {
     let parser = grammar::ProgramParser::new();
