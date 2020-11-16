@@ -1,11 +1,6 @@
-use std::io;
-use std::io::Read;
-use instant_compiler::parser::grammar;
+use instant_compiler::parser::parse_input;
 
 pub fn main() {
-    let parser = grammar::ProgramParser::new();
-    let mut input = String::new();
-    io::stdin().read_to_string(&mut input).expect("Failed to read line");
-    let expressions = parser.parse(&input).unwrap();
-    println!("{:?}", expressions);
+    let statements = parse_input();
+    println!("{:?}", statements);
 }
