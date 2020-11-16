@@ -60,12 +60,12 @@ Generates `foo/bar/file.ll` (text bytecode representation) and `foo/bar/file.bc`
 
 ## Project structure
 ```
-├── compiler    # crate for jvm & llvm compiler
-├── lib         # jasmin.jar & 
-├── parser      # crate for grammar and ast
+├── lib             # jasmin.jar & runtime.bc
 ├── src         
-│   └── bin     # jvm & llvm executable sources
+│   ├── bin         # jvm & llvm executable sources
+│   ├── compiler    # jvm & llvm compilers
+│   └── parser      # ast definitions and parser
 ├── target
-│   └── debug   # jvm & llvm binaries
-└── tests       # test files
+│   └── debug       # jvm & llvm binaries
+└── tests           # test files
 ```
